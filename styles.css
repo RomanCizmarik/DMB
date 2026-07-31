@@ -28,6 +28,17 @@ body {
 
 .titles {
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+}
+
+.title-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 h1,
@@ -52,8 +63,12 @@ h2 {
   color: #2f4268;
 }
 
+.title-block .subtitle {
+  max-width: 360px;
+}
+
 .ampersand {
-  margin: 0.9rem 0;
+  margin: 0;
   font-size: clamp(1.8rem, 3vw, 2.4rem);
   font-weight: 700;
   color: #1e3566;
@@ -133,4 +148,46 @@ h2 {
 .notes li {
   margin: 0.25rem 0;
   color: #243a62;
+}
+
+.content-sections {
+  margin: 2rem auto 0;
+  display: grid;
+  gap: 1.25rem;
+  text-align: left;
+}
+
+.content-card {
+  padding: 0;
+}
+
+.content-card + .content-card {
+  padding-top: 1rem;
+  border-top: 1px solid rgba(15, 50, 120, 0.16);
+}
+
+.content-card h3 {
+  margin: 0;
+  font-size: clamp(1.1rem, 2.1vw, 1.45rem);
+  color: #183468;
+}
+
+.content-card p {
+  margin: 0.55rem 0 0;
+  color: #2a416b;
+}
+
+@media (max-width: 860px) {
+  .titles {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+
+  .ampersand {
+    margin: 0.15rem 0;
+  }
+
+  .title-block .subtitle {
+    max-width: 760px;
+  }
 }
