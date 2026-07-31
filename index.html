@@ -9,6 +9,10 @@
 <body>
   <main class="page">
     <img class="title-image" src="images/title_image.png" alt="Direct Mesh Booleans title image">
+    <p class="wip-disclaimer">
+      <img src="images/work_in_progress.png" alt="" aria-hidden="true">
+      <span>This page is Work in Progress.</span>
+    </p>
 
     <section class="titles">
       <div class="title-block">
@@ -58,7 +62,27 @@
     <section class="content-sections" aria-label="Project sections">
       <article class="content-card">
         <h3>Direct Mesh Booleans (DMB)</h3>
-        <p>DMB is a robust framework for computing Boolean operations on triangle meshes that imposes no input restrictions.</p>
+        <p>DMB is a robust framework for computing Boolean operations on triangle meshes that imposes no restrictions on inputs.</p>
+        <h4>Abstract</h4>
+        <p class="section-placeholder">In this paper, we propose a robust algorithm for Boolean operations on triangle meshes that imposes no input restrictions. Boolean operations are a fundamental tool in 3D modeling and geometry processing. Yet, existing approaches are prone to errors when faced with common defects in triangle meshes, such as open boundaries, non-manifold geometry, and self-intersections, or they disallow such inputs entirely. Exactness and numerical stability of our method are ensured by leveraging recent advances in exact computations. The method operates directly on the input meshes without any volumetric transformation, thus providing accurate conformity with the input surfaces. A lightweight regularization guarantees two-manifold outputs, albeit permitting open boundaries if necessary. Extensive evaluation on thousands of real-world meshes from the Thingi10k dataset demonstrates that our method’s reliability, robustness, and speed outperform prior art.</p>
+        <div class="bibtex-wrap">
+          <button class="copy-bibtex" type="button" data-target="dmb-bibtex-code" title="Copy citation" aria-label="Copy citation">
+            <img src="images/copy_icon.png" alt="" aria-hidden="true">
+            <span class="sr-only">Copy citation</span>
+          </button>
+          <pre class="bibtex"><code id="dmb-bibtex-code">@inproceedings{grivapp26,
+  author={Roman \v{C}i\v{z}marik and Michal \v{S}pan\v{e}l},
+  title={Direct Mesh Booleans: A Step towards Non-Restrictive Boolean Operations},
+  booktitle={Proceedings of the 21st International Conference on Computer Graphics, Interaction and Visualization Theory and Applications - GRIVAPP},
+  year={2026},
+  pages={13--26},
+  publisher={SciTePress},
+  organization={INSTICC},
+  doi={10.5220/0014043800004728},
+  isbn={978-989-758-803-7},
+  address={Marbella, Spain}
+}</code></pre>
+        </div>
       </article>
       <article class="content-card">
         <h3>Extended Direct Mesh Booleans (DMB++)</h3>
@@ -70,5 +94,54 @@
       </article>
     </section>
   </main>
+  <script>
+    function setCopyButtonState(button, copied) {
+      button.classList.toggle("copied", copied);
+      button.classList.toggle("failed", !copied);
+      button.title = copied ? "Copied" : "Copy failed";
+      button.setAttribute("aria-label", copied ? "Copied" : "Copy failed");
+      button.disabled = true;
+      window.setTimeout(() => {
+        button.classList.remove("copied", "failed");
+        button.title = "Copy citation";
+        button.setAttribute("aria-label", "Copy citation");
+        button.disabled = false;
+      }, 1200);
+    }
+
+    function fallbackCopy(text) {
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "absolute";
+      textarea.style.left = "-9999px";
+      document.body.appendChild(textarea);
+      textarea.select();
+      const copied = document.execCommand("copy");
+      document.body.removeChild(textarea);
+      return copied;
+    }
+
+    document.querySelectorAll(".copy-bibtex").forEach((button) => {
+      button.addEventListener("click", () => {
+        const targetId = button.getAttribute("data-target");
+        const code = targetId ? document.getElementById(targetId) : null;
+        const text = code ? code.textContent : "";
+        if (!text) {
+          setCopyButtonState(button, false);
+          return;
+        }
+
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(text)
+            .then(() => setCopyButtonState(button, true))
+            .catch(() => setCopyButtonState(button, fallbackCopy(text)));
+          return;
+        }
+
+        setCopyButtonState(button, fallbackCopy(text));
+      });
+    });
+  </script>
 </body>
 </html>
